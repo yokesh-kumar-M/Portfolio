@@ -49,7 +49,7 @@ const sendEmail = (e) =>{
     e.preventDefault()
 
     // serviceID - templateID - #form - publicKey
-    emailjs.sendForm('service_hp1m2mh','template_z56cid4','#contact-form','Fvu4N2-utszga0O2w')
+    emailjs.sendForm('service_4ij5tj9','template_5el5fut','#contact-form','7KipS_tpZAvrzYgDv')
     .then(() => {
            // Show sent message
            contactMessage.textContent = 'Message sent successfully ✅'
@@ -284,7 +284,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
+/* Existing code remains unchanged */
 
+/*=============== SCROLL REVEAL ANIMATION FOR SUMMER TRAINING ===============*/
+ScrollReveal().reveal('.training__reveal', {
+  origin: 'bottom',
+  distance: '40px',
+  duration: 1000,
+  interval: 200,
+  reset: false
+});
 
 
 

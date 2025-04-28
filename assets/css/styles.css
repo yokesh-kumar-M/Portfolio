@@ -10,11 +10,11 @@
   --first-color: hsl(14, 98%, 50%);
   --black-color: hsl(0, 0%, 0%);
   --black-color-light: hsl(0, 0%, 40%);
-  --white-color: hsl(0, 0%, 95%);
+  --white-color: hsl(0, 4%, 79%);
   --title-color: hsl(0, 0%, 0%);
   --text-color: hsl(0, 0%, 35%);
   --text-color-light: hsl(0, 0%, 64%);
-  --body-color: hsl(0, 0%, 87%);
+  --body-color: hsl(0, 3%, 82%);
   --container-color: hsl(0, 0%, 83%);
 
   /*========== Font and typography ==========*/
@@ -971,6 +971,29 @@ body.dark-theme .resume__card {
 }
 
 
+/* Existing styles remain unchanged */
+
+/* Ensure Summer Training section aligns with existing resume styling */
+.resume__grid.training__reveal {
+  margin-bottom: 2rem;
+}
+
+.resume__card.training__reveal {
+  background-color: var(--container-color);
+  padding: 1.5rem;
+  border-left: 4px solid var(--first-color);
+  box-shadow: var(--box-shadow);
+  transition: transform 0.3s;
+}
+
+.resume__card.training__reveal:hover {
+  transform: translateY(-4px);
+}
+
+body.dark-theme .resume__card.training__reveal {
+  background-color: var(--black-color-light);
+}
+
 
 /*=============== PROJECTS SECTION ===============*/
 /*=============== PROJECTS SECTION ===============*/
@@ -1015,34 +1038,28 @@ body.dark-theme .resume__card {
   font-size: 1.5rem;
   font-weight: var(--font-semi-bold);
   color: var(--title-color);
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
-.project__description, .project__impact, .project__next {
+.project__role {
+  font-size: var(--small-font-size);
+  font-weight: var(--font-semi-bold);
+  color: var(--text-color);
+  margin-bottom: 0.5rem;
+}
+
+.project__description {
   font-size: var(--normal-font-size);
   color: var(--text-color);
   margin-bottom: 1rem;
   line-height: 1.6;
 }
 
-.project__features {
-  list-style: none;
-  padding: 0;
-  text-align: left;
+.project__tech {
+  font-size: var(--small-font-size);
+  color: var(--text-color);
   margin-bottom: 1rem;
-}
-
-.project__features li {
-  margin-bottom: 0.5rem;
-  padding-left: 1rem;
-  position: relative;
-}
-
-.project__features li:before {
-  content: "✨";
-  position: absolute;
-  left: 0;
-  color: var(--first-color);
+  line-height: 1.6;
 }
 
 .project__link {
@@ -1065,45 +1082,7 @@ body.dark-theme .resume__card {
   font-size: 1.2rem;
 }
 
-.project__toggle-button {
-  display: block;
-  margin: 1rem auto 0; /* Centers horizontally with top margin */
-  padding: 0.4rem 0.8rem;
-  background-color: var(--first-color);
-  color: var(--white-color);
-  border: none;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: background-color 0.3s;
-}
-.projects__container {
-  display: grid;
-  gap: 2rem;
-  grid-template-columns: repeat(auto, minmax(0, 1fr)); /* Forces 3 columns */
-  justify-items: center;
-}
-
-.project__card {
-  width: 100%;
-}
-
-.project__toggle-button:hover {
-  background-color: var(--first-color-alt);
-}
-
-body.dark-theme .project__toggle-button {
-  background-color: hsl(14, 98%, 50%);
-}
-
-body.dark-theme .project__toggle-button:hover {
-  background-color: hsl(14, 98%, 50%);
-}
-
-.hide {
-  display: none;
-}
-
+/* Dark theme styles */
 body.dark-theme .projects {
   background-color: #1a1a1a;
 }
@@ -1120,32 +1099,19 @@ body.dark-theme .project__link:hover {
   background-color: hsl(14, 98%, 50%);
 }
 
-body.dark-theme .project__toggle-button {
-  background-color: hsl(14, 98%, 50%);
-}
-
-body.dark-theme .project__toggle-button:hover {
-  background-color: hsl(14, 98%, 50%);
-}
-
-/* Variables (aligned with your existing style) */
+/* Variables (aligned with existing style) */
 :root {
   --first-color: hsl(14, 98%, 50%);
   --first-color-alt: hsl(14, 98%, 50%);
-  --first-color-dark:hsl(14, 98%, 50%);
-  --first-color-alt-dark:hsl(14, 98%, 50%);
   --title-color: #1a1a1a;
   --text-color: #4f4f4f;
   --body-color: #f9f9f9;
   --container-color: #ffffff;
-  --body-color-dark: #1a1a1a;
-  --container-color-dark: #2a2a2a;
   --white-color: #ffffff;
   --normal-font-size: 1rem;
   --small-font-size: 0.875rem;
   --font-semi-bold: 600;
 }
-
 /* Ensure Remixicon is loaded (link it in your main HTML) */
 
 /*=============== CERTIFICATIONS SECTION ===============*/
@@ -1180,7 +1146,7 @@ body.dark-theme .project__toggle-button:hover {
 
 .cert__card iframe {
   width: 100%;
-  height: 380px;
+  height: 200px;
   border-radius: 0.5rem;
   border: none;
   background-color: #fff;
@@ -2219,6 +2185,10 @@ body.dark-theme .footer__link:hover, body.dark-theme .footer__download-link:hove
   .scrollup{
     right: 3rem;
   }
+}
+.project_content{
+  list-style-type: disc;
+  text-align:left;
 }
 
 
