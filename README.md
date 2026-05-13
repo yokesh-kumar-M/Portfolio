@@ -61,7 +61,3 @@ Access at `http://localhost`. Health checks:
 ├── nginx.conf           # App server config
 └── nginx-lb.conf        # Load balancer config
 ```
-
-## License
-
-Private — All rights reserved.
