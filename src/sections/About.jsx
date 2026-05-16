@@ -1,5 +1,6 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import { about } from "../data/portfolioData";
 
 const Counter = ({ value, suffix = "" }) => {
@@ -24,6 +25,11 @@ const Counter = ({ value, suffix = "" }) => {
     ? count.toFixed(2)
     : Math.round(count);
   return <span ref={ref}>{display}{suffix}</span>;
+};
+
+Counter.propTypes = {
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  suffix: PropTypes.string,
 };
 
 const fade = (d = 0) => ({

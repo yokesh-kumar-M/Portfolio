@@ -1,9 +1,15 @@
 import { motion } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
+import PropTypes from "prop-types";
 
 const LoadingScreen = ({ onComplete }) => {
   const [progress, setProgress] = useState(0);
   const canvasRef = useRef(null);
+  const progressRef = useRef(0);
+
+  useEffect(() => {
+    progressRef.current = progress;
+  }, [progress]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -17,10 +23,9 @@ const LoadingScreen = ({ onComplete }) => {
     const stars = [];
     const centerX = w / 2;
     const centerY = h / 2;
-    let speed = 0.5; // Starts slow, accelerates
+    let speed = 0.5;
     let hyperDrive = false;
 
-    // Initialize stars with 3D coordinates
     for (let i = 0; i < numStars; i++) {
       stars.push({
         x: Math.random() * w - centerX,
@@ -33,16 +38,15 @@ const LoadingScreen = ({ onComplete }) => {
     let animationFrameId;
 
     const draw = () => {
-      // Create trailing effect using semi-transparent fill
+      const currentProgress = progressRef.current;
       ctx.fillStyle = "rgba(2, 2, 5, 0.3)";
       ctx.fillRect(0, 0, w, h);
 
-      // Accelerate as loading progresses
-      if (progress > 80 && !hyperDrive) {
+      if (currentProgress > 80 && !hyperDrive) {
         hyperDrive = true;
       }
 
-      const targetSpeed = hyperDrive ? 40 : 2 + (progress * 0.15);
+      const targetSpeed = hyperDrive ? 40 : 2 + (currentProgress * 0.15);
       speed += (targetSpeed - speed) * 0.05;
 
       stars.forEach(star => {
@@ -55,7 +59,6 @@ const LoadingScreen = ({ onComplete }) => {
           star.pz = w;
         }
 
-        // Convert 3D to 2D
         const k = 128.0 / star.z;
         const px = star.x * k + centerX;
         const py = star.y * k + centerY;
@@ -66,12 +69,10 @@ const LoadingScreen = ({ onComplete }) => {
 
         star.pz = star.z;
 
-        // Draw star trail
         ctx.beginPath();
         ctx.moveTo(ppx, ppy);
         ctx.lineTo(px, py);
 
-        // Color based on distance (closer = brighter, slightly varied hues)
         const brightness = Math.min(1, 1 - (star.z / w));
         ctx.strokeStyle = `rgba(255, 255, 255, ${brightness})`;
         ctx.lineWidth = hyperDrive ? (1 - star.z / w) * 4 : (1 - star.z / w) * 2;
@@ -93,7 +94,7 @@ const LoadingScreen = ({ onComplete }) => {
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener('resize', handleResize);
     };
-  }, [progress]);
+  }, []);
 
   useEffect(() => {
     // Simulate realistic loading progress
@@ -173,6 +174,10 @@ const LoadingScreen = ({ onComplete }) => {
       </div>
     </motion.div>
   );
+};
+
+LoadingScreen.propTypes = {
+  onComplete: PropTypes.func.isRequired,
 };
 
 export default LoadingScreen;

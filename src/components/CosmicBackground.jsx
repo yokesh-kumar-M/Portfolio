@@ -1,11 +1,11 @@
-import { useRef, useMemo } from "react";
+import { useRef, useMemo, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Stars, PerspectiveCamera } from "@react-three/drei";
 import { useScroll } from "framer-motion";
 import { EffectComposer, Bloom, Noise, Vignette } from "@react-three/postprocessing";
-import { useTheme } from "../context/ThemeContext";
+import PropTypes from "prop-types";
 import * as THREE from "three";
-import { useState } from "react";
+import { useTheme } from "../context/ThemeContext";
 
 // --- Deep Space Shaders ---
 
@@ -56,35 +56,37 @@ const deepSpaceFragmentShader = `
   void main() {
     vec2 p = vUv * 2.0 - 1.0;
     p.x *= 1.77; // Aspect ratio
-    
+
     // Distant cosmic gas
     float n1 = fbm(p * 0.5 + time * 0.01 + scroll * 0.05);
     float n2 = fbm(p * 1.2 - time * 0.005 + n1 * 0.3);
-    
+
     float intensity = pow(n2, 3.5);
     vec3 color = mix(color1, color2, n2);
-    
+
     // Smooth falloff to keep it "away"
     float d = length(p);
     float mask = smoothstep(1.8, 0.2, d);
-    
+
     gl_FragColor = vec4(color, intensity * 0.15 * mask);
   }
 `;
 
-// --- Scene Components ---
+const scrollProgressShape = PropTypes.shape({
+  get: PropTypes.func.isRequired,
+});
 
 // --- Dark Particles for Light Mode ---
 
 const DarkParticles = ({ count = 600 }) => {
-  const pointsRef = useRef();
+  const pointsRef = useRef(null);
 
   const [positions] = useState(() => {
     const pos = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
       pos[i * 3] = (Math.random() - 0.5) * 400;
       pos[i * 3 + 1] = (Math.random() - 0.5) * 400;
-      pos[i * 3 + 2] = (Math.random() - 0.5) * 300 - 150; // Push far back
+      pos[i * 3 + 2] = (Math.random() - 0.5) * 300 - 150;
     }
     return pos;
   });
@@ -101,23 +103,25 @@ const DarkParticles = ({ count = 600 }) => {
       <bufferGeometry>
         <bufferAttribute attach="attributes-position" count={count} array={positions} itemSize={3} />
       </bufferGeometry>
-      {/* Soft dark dots */}
       <pointsMaterial size={1.2} color="#1a1a1a" transparent opacity={0.5} sizeAttenuation depthWrite={false} />
     </points>
   );
 };
 
+DarkParticles.propTypes = {
+  count: PropTypes.number,
+};
+
 const CelestialVoid = ({ scrollYProgress }) => {
-  const groupRef = useRef();
+  const groupRef = useRef(null);
   const { theme } = useTheme();
 
   useFrame((state, delta) => {
     const scroll = scrollYProgress.get();
     if (groupRef.current) {
-      // Slow, majestic rotation for an infinite sense of scale
       groupRef.current.rotation.y += delta * 0.02;
-      groupRef.current.rotation.x = scroll * 0.1; // Subtle parallax tilt
-      groupRef.current.position.z = scroll * 3; // Creep forward as we scroll
+      groupRef.current.rotation.x = scroll * 0.1;
+      groupRef.current.position.z = scroll * 3;
     }
   });
 
@@ -125,18 +129,19 @@ const CelestialVoid = ({ scrollYProgress }) => {
     <group ref={groupRef}>
       {theme === "dark" ? (
         <>
-          {/* Background Star Layers (Pushed far into the distance) */}
           <Stars radius={350} depth={100} count={10000} factor={4} saturation={0} fade speed={0.1} />
-          {/* Mid-ground faint cluster */}
           <Stars radius={200} depth={50} count={2000} factor={6} saturation={1} fade speed={0.5} />
         </>
       ) : (
         <DarkParticles count={1500} />
       )}
-
       <DistantGlow scrollYProgress={scrollYProgress} />
     </group>
   );
+};
+
+CelestialVoid.propTypes = {
+  scrollYProgress: scrollProgressShape.isRequired,
 };
 
 const DistantGlow = ({ scrollYProgress }) => {
@@ -171,6 +176,10 @@ const DistantGlow = ({ scrollYProgress }) => {
   );
 };
 
+DistantGlow.propTypes = {
+  scrollYProgress: scrollProgressShape.isRequired,
+};
+
 // --- Main Background Component ---
 
 const CosmicBackground = () => {
@@ -187,7 +196,7 @@ const CosmicBackground = () => {
       }}
     >
       <Canvas
-        gl={{ antialias: true, alpha: true, stencil: false, PowerPreference: "high-performance" }}
+        gl={{ antialias: true, alpha: true, stencil: false, powerPreference: "high-performance" }}
         dpr={[1, 2]}
       >
         <PerspectiveCamera makeDefault position={[0, 0, 20]} fov={45} far={1000} />

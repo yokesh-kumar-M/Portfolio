@@ -1,9 +1,10 @@
 import { useEffect, useState, useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { personalInfo } from "../data/portfolioData";
 import { ArrowDown, ChevronRight, Shield, Cpu, Zap } from "lucide-react";
+import Atropos from "atropos/react";
+import PropTypes from "prop-types";
+import { personalInfo } from "../data/portfolioData";
 import profileImg from "../assets/me.png";
-import Atropos from 'atropos/react';
 
 /* Live clock — shows visitor's local time */
 const LiveClock = () => {
@@ -69,6 +70,10 @@ const TypeWriter = ({ words }) => {
   );
 };
 
+TypeWriter.propTypes = {
+  words: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
+
 const Hero = () => {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -122,7 +127,7 @@ const Hero = () => {
                 <span className="block text-2xl md:text-3xl font-mono text-[var(--text-s)] mb-2 tracking-tight">
                   Security Specialist & Engineer.
                 </span>
-                <span className="text-[var(--text)]">Hello, I'm </span>
+                <span className="text-[var(--text)]">Hello, I&apos;m </span>
                 <span className="relative inline-block text-[var(--accent)] group">
                   Yokesh Kumar M
                   {/* Subtle Underline Animation */}
@@ -179,9 +184,9 @@ const Hero = () => {
             >
               <Atropos
                 className="atropos-hero"
-                highlight={true}
-                shadow={true}
-                rotateTouch={true}
+                highlight
+                shadow
+                rotateTouch
               >
                 <div className="relative group p-2 rounded-[3rem] border border-white/5 bg-[var(--bg-card)]/30 backdrop-blur-sm">
                   {/* Portrait Background Detail */}

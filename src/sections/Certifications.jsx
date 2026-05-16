@@ -1,8 +1,9 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { certifications } from "../data/portfolioData";
+import PropTypes from "prop-types";
+import Atropos from "atropos/react";
 import { CheckCircle, Calendar, ShieldCheck, Award } from "lucide-react";
-import Atropos from 'atropos/react';
+import { certifications } from "../data/portfolioData";
 
 const fade = (d = 0) => ({
   initial: { opacity: 0, y: 40 },
@@ -21,12 +22,12 @@ const CertEntry = ({ cert, index, isSmall = false }) => {
     >
       <Atropos
         className="atropos-card"
-        highlight={true}
-        rotateTouch={true}
+        highlight
+        rotateTouch
         shadow={false}
       >
         <div
-          className={`relative p-8 md:p-10 rounded-2xl overflow-hidden glass transition-all duration-700 hover:shadow-glow border border-white/5`}
+          className="relative p-8 md:p-10 rounded-2xl overflow-hidden glass transition-all duration-700 hover:shadow-glow border border-white/5"
           style={{ background: "var(--bg-card)" }}
         >
           {/* Subtle Glow Backdrop */}
@@ -81,6 +82,20 @@ const CertEntry = ({ cert, index, isSmall = false }) => {
       </Atropos>
     </motion.div>
   );
+};
+
+CertEntry.propTypes = {
+  cert: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    org: PropTypes.string.isRequired,
+    badge: PropTypes.string,
+    year: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    description: PropTypes.string,
+    topics: PropTypes.arrayOf(PropTypes.string),
+    featured: PropTypes.bool,
+  }).isRequired,
+  index: PropTypes.number.isRequired,
+  isSmall: PropTypes.bool,
 };
 
 const Certifications = () => {

@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { projects, getIconByTech } from "../data/portfolioData";
-import { Github, ExternalLink, ArrowUpRight, Terminal } from "lucide-react";
+import { Github, ExternalLink, ArrowUpRight } from "lucide-react";
 import Atropos from 'atropos/react';
 
 const fade = (d = 0) => ({
@@ -45,9 +45,9 @@ const Projects = () => {
                 <div className="w-full lg:w-[55%] relative">
                   <Atropos
                     className="atropos-project"
-                    highlight={true}
-                    shadow={true}
-                    rotateTouch={true}
+                    highlight
+                    shadow
+                    rotateTouch
                   >
                     <div className="relative aspect-video rounded-2xl overflow-hidden border border-white/5 shadow-2xl">
                       <img
@@ -139,13 +139,6 @@ const Projects = () => {
           ))}
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes scan {
-          0% { top: -10%; }
-          100% { top: 110%; }
-        }
-      `}</style>
     </section>
   );
 };

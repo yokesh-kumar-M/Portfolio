@@ -30,7 +30,7 @@ const Experience = () => {
         <div className="space-y-0">
           {experience.map((exp, i) => (
             <motion.div
-              key={i}
+              key={`${exp.title}-${exp.org}`}
               {...fade(i * 0.1)}
               className="group"
             >
@@ -97,7 +97,7 @@ const Experience = () => {
                   <ul className="space-y-4 mb-10">
                     {exp.points.map((point, j) => (
                       <motion.li
-                        key={j}
+                        key={point}
                         initial={{ opacity: 0, x: -15 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}

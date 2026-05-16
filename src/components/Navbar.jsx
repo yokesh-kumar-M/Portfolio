@@ -95,6 +95,7 @@ const Navbar = () => {
             {/* ── Right: Actions ── */}
             <div className="flex items-center gap-2">
               <button
+                type="button"
                 onClick={toggle}
                 className="flex items-center justify-center cursor-pointer rounded-full transition-all duration-300 hover:scale-110"
                 style={{
@@ -132,6 +133,7 @@ const Navbar = () => {
               </a>
 
               <button
+                type="button"
                 onClick={() => setMenuOpen(true)}
                 className="lg:hidden flex items-center justify-center cursor-pointer rounded-full"
                 style={{
@@ -140,6 +142,7 @@ const Navbar = () => {
                   border: "1px solid var(--border)",
                   color: "var(--text-s)",
                 }}
+                aria-label="Open menu"
               >
                 <Menu size={15} />
               </button>
@@ -164,9 +167,11 @@ const Navbar = () => {
                 Yokesh Kumar M
               </span>
               <button
+                type="button"
                 onClick={() => setMenuOpen(false)}
                 className="flex items-center justify-center cursor-pointer"
                 style={{ width: "32px", height: "32px", color: "var(--text-m)" }}
+                aria-label="Close menu"
               >
                 <X size={18} />
               </button>

@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import Lenis from "lenis";
-import { ThemeProvider } from "./context/ThemeContext";
+import PropTypes from "prop-types";
 import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
 import { Github, Linkedin, Mail, Heart, ArrowUp } from "lucide-react";
+import { ThemeProvider } from "./context/ThemeContext";
 import Navbar from "./components/Navbar";
 import CosmicBackground from "./components/CosmicBackground";
 import LoadingScreen from "./components/LoadingScreen";
@@ -45,6 +46,10 @@ const ScrollReveal = ({ children }) => {
       {children}
     </motion.div>
   );
+};
+
+ScrollReveal.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 const AppContent = () => {
@@ -146,12 +151,12 @@ const AppContent = () => {
 
                   <div className="flex items-center gap-6">
                     {[
-                      { Icon: Github, href: personalInfo.github },
-                      { Icon: Linkedin, href: personalInfo.linkedin },
-                      { Icon: Mail, href: `mailto:${personalInfo.email}` },
-                    ].map(({ Icon, href }, i) => (
+                      { Icon: Github, href: personalInfo.github, label: "GitHub" },
+                      { Icon: Linkedin, href: personalInfo.linkedin, label: "LinkedIn" },
+                      { Icon: Mail, href: `mailto:${personalInfo.email}`, label: "Email" },
+                    ].map(({ Icon, href, label }) => (
                       <a
-                        key={i}
+                        key={label}
                         href={href}
                         target="_blank"
                         rel="noopener noreferrer"
@@ -186,6 +191,7 @@ const AppContent = () => {
           <AnimatePresence>
             {showTop && (
               <motion.button
+                type="button"
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.8 }}
@@ -196,6 +202,7 @@ const AppContent = () => {
                   color: "#fff",
                   boxShadow: "0 6px 20px rgba(184,134,11,0.25)",
                 }}
+                aria-label="Scroll to top"
               >
                 <ArrowUp size={16} />
               </motion.button>

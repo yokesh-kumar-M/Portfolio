@@ -21,12 +21,10 @@ RUN npm run build
 # ══════════════════════════════════════════════
 FROM nginx:1.27-alpine
 
-# Security: run as non-root
-RUN addgroup -g 101 -S nginx || true && \
-    adduser -S -D -H -u 101 -h /var/cache/nginx -s /sbin/nologin -G nginx -g nginx nginx || true
-
-# Remove default config
-RUN rm -rf /usr/share/nginx/html/* /etc/nginx/conf.d/default.conf
+# Security: ensure non-root nginx user exists and remove default config in one layer
+RUN addgroup -g 101 -S nginx 2>/dev/null || true \
+    && adduser -S -D -H -u 101 -h /var/cache/nginx -s /sbin/nologin -G nginx -g nginx nginx 2>/dev/null || true \
+    && rm -rf /usr/share/nginx/html/* /etc/nginx/conf.d/default.conf
 
 # Copy built assets
 COPY --from=build /app/dist /usr/share/nginx/html

@@ -30,7 +30,7 @@ const Contact = () => {
           className="heading-section mb-6"
           style={{ color: "var(--text)" }}
         >
-          Let's work <span style={{ color: "var(--accent)" }}>together.</span>
+          Let&apos;s work <span style={{ color: "var(--accent)" }}>together.</span>
         </motion.h2>
         <motion.p
           {...fade(0.1)}
@@ -53,7 +53,7 @@ const Contact = () => {
               className="text-base leading-[1.9] mb-10 max-w-md"
               style={{ color: "var(--text-s)" }}
             >
-              I'd love to hear about your project or opportunity. Drop me a message and let's discuss how we can make it happen.
+              I&apos;d love to hear about your project or opportunity. Drop me a message and let&apos;s discuss how we can make it happen.
             </p>
 
             <div className="flex flex-col sm:flex-row flex-wrap gap-3 md:gap-4">

@@ -1,9 +1,14 @@
 import { useRef, useEffect, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Stars, Float, SoftShadows, ContactShadows } from "@react-three/drei";
+import { Stars, SoftShadows } from "@react-three/drei";
 import { useScroll } from "framer-motion";
-import { useTheme } from "../context/ThemeContext";
+import PropTypes from "prop-types";
 import * as THREE from "three";
+import { useTheme } from "../context/ThemeContext";
+
+const scrollRefShape = PropTypes.shape({
+  current: PropTypes.number,
+});
 
 // 3D Celestial scene
 const CelestialBody = ({ theme, scrollYProgress }) => {
@@ -11,22 +16,18 @@ const CelestialBody = ({ theme, scrollYProgress }) => {
   const glowRef = useRef(null);
 
   useFrame((state, delta) => {
-    // Current scroll mapping 0 (top) to 1 (bottom)
     const scroll = scrollYProgress.current || 0;
 
     if (meshRef.current) {
-      // Rotation
       meshRef.current.rotation.y += delta * 0.15;
       meshRef.current.rotation.x = scroll * Math.PI * 2;
 
-      // Trajectory based on scroll
-      // Starts high right, moves to bottom left
       const targetX = 12 - scroll * 24;
       const targetY = 8 - scroll * 12;
 
       meshRef.current.position.x += (targetX - meshRef.current.position.x) * 0.05;
       meshRef.current.position.y += (targetY - meshRef.current.position.y) * 0.05;
-      meshRef.current.position.z = -15 + Math.sin(scroll * Math.PI) * 5; // Comes forward
+      meshRef.current.position.z = -15 + Math.sin(scroll * Math.PI) * 5;
 
       if (glowRef.current) {
         glowRef.current.position.copy(meshRef.current.position);
@@ -79,20 +80,26 @@ const CelestialBody = ({ theme, scrollYProgress }) => {
   );
 };
 
+CelestialBody.propTypes = {
+  theme: PropTypes.oneOf(["light", "dark"]).isRequired,
+  scrollYProgress: scrollRefShape.isRequired,
+};
+
 // Cyber particles that float around
 const TechParticles = ({ theme, scrollYProgress }) => {
   const pointsRef = useRef(null);
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
   const particleCount = isMobile ? 100 : 300;
 
-  const [particles] = useState(() => Array.from({ length: particleCount }).map(() => ({
-    pos: new THREE.Vector3(
-      (Math.random() - 0.5) * 50,
-      (Math.random() - 0.5) * 50,
-      (Math.random() - 0.5) * 50
-    ),
-    speed: Math.random() * 0.02
-  })));
+  const [particleData] = useState(() => {
+    const positions = new Float32Array(particleCount * 3);
+    for (let i = 0; i < particleCount; i++) {
+      positions[i * 3] = (Math.random() - 0.5) * 50;
+      positions[i * 3 + 1] = (Math.random() - 0.5) * 50;
+      positions[i * 3 + 2] = (Math.random() - 0.5) * 50;
+    }
+    return positions;
+  });
 
   useFrame(() => {
     if (pointsRef.current) {
@@ -107,8 +114,8 @@ const TechParticles = ({ theme, scrollYProgress }) => {
       <bufferGeometry>
         <bufferAttribute
           attach="attributes-position"
-          count={particles.length}
-          array={new Float32Array(particles.flatMap(p => [p.pos.x, p.pos.y, p.pos.z]))}
+          count={particleCount}
+          array={particleData}
           itemSize={3}
         />
       </bufferGeometry>
@@ -123,6 +130,11 @@ const TechParticles = ({ theme, scrollYProgress }) => {
   );
 };
 
+TechParticles.propTypes = {
+  theme: PropTypes.oneOf(["light", "dark"]).isRequired,
+  scrollYProgress: scrollRefShape.isRequired,
+};
+
 const SkyBackground = () => {
   const { theme } = useTheme();
   const { scrollYProgress } = useScroll();
@@ -130,10 +142,13 @@ const SkyBackground = () => {
 
   // Sync framer-motion scroll with a mutable ref for R3F
   useEffect(() => {
-    return scrollYProgress.onChange((v) => {
+    return scrollYProgress.on("change", (v) => {
       scrollRef.current = v;
     });
   }, [scrollYProgress]);
+
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const dpr = isMobile ? 1 : Math.min(typeof window !== 'undefined' ? window.devicePixelRatio : 1, 2);
 
   return (
     <div
@@ -143,17 +158,16 @@ const SkyBackground = () => {
       <Canvas
         camera={{ position: [0, 0, 15], fov: 45 }}
         gl={{ antialias: true, alpha: true }}
-        dpr={typeof window !== 'undefined' && window.innerWidth < 768 ? 1 : Math.min(window.devicePixelRatio, 2)}
+        dpr={dpr}
       >
         <SoftShadows size={20} samples={16} focus={0.5} />
 
         {theme === "dark" && (
-          <Stars radius={100} depth={50} count={typeof window !== 'undefined' && window.innerWidth < 768 ? 1500 : 3000} factor={4} saturation={0.5} fade speed={0.5} />
+          <Stars radius={100} depth={50} count={isMobile ? 1500 : 3000} factor={4} saturation={0.5} fade speed={0.5} />
         )}
 
         <CelestialBody theme={theme} scrollYProgress={scrollRef} />
         <TechParticles theme={theme} scrollYProgress={scrollRef} />
-
       </Canvas>
 
       {/* Post-processing visual overlays */}

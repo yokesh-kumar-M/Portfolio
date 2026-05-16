@@ -31,7 +31,7 @@ const Education = () => {
         <div className="mb-20">
           {about.education.map((edu, i) => (
             <motion.div
-              key={i}
+              key={edu.degree}
               {...fade(0.1 + i * 0.1)}
               className="grid grid-cols-1 lg:grid-cols-[140px_1fr] gap-6 lg:gap-10 pb-12 mb-12"
               style={{
@@ -104,7 +104,7 @@ const Education = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-12">
           {achievements.map((ach, i) => (
-            <motion.div key={i} {...fade(0.15 + i * 0.1)}>
+            <motion.div key={ach.title} {...fade(0.15 + i * 0.1)}>
               {/* Giant stat */}
               <div
                 className="text-3xl md:text-6xl font-serif font-bold mb-3 md:mb-4 leading-none"

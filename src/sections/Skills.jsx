@@ -1,5 +1,6 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import PropTypes from "prop-types";
 import { skills } from "../data/portfolioData";
 
 const fade = (d = 0) => ({
@@ -29,6 +30,10 @@ const SkillBar = ({ level }) => {
       />
     </div>
   );
+};
+
+SkillBar.propTypes = {
+  level: PropTypes.number.isRequired,
 };
 
 /* Single skill item — wide row layout */
@@ -90,6 +95,15 @@ const SkillRow = ({ skill, delay }) => {
       </div>
     </motion.div>
   );
+};
+
+SkillRow.propTypes = {
+  skill: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    level: PropTypes.number.isRequired,
+    icon: PropTypes.string,
+  }).isRequired,
+  delay: PropTypes.number,
 };
 
 const Skills = () => {
