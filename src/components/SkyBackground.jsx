@@ -10,6 +10,8 @@ const scrollRefShape = PropTypes.shape({
   current: PropTypes.number,
 });
 
+const ACCENT_GOLD = "#E8A838";
+
 // 3D Celestial scene
 const CelestialBody = ({ theme, scrollYProgress }) => {
   const meshRef = useRef(null);
@@ -46,7 +48,7 @@ const CelestialBody = ({ theme, scrollYProgress }) => {
       <mesh ref={glowRef}>
         <sphereGeometry args={[isLight ? 3 : 2.5, 32, 32]} />
         <meshBasicMaterial
-          color={isLight ? "#E8A838" : "#88aaff"}
+          color={isLight ? ACCENT_GOLD : "#88aaff"}
           transparent
           opacity={0.15}
           blending={THREE.AdditiveBlending}
@@ -59,7 +61,7 @@ const CelestialBody = ({ theme, scrollYProgress }) => {
         <sphereGeometry args={[isLight ? 2.5 : 2.2, 64, 64]} />
         <meshStandardMaterial
           color={isLight ? "#ffcc00" : "#cbd4e0"}
-          emissive={isLight ? "#E8A838" : "#1a2436"}
+          emissive={isLight ? ACCENT_GOLD : "#1a2436"}
           emissiveIntensity={isLight ? 1.5 : 0.8}
           roughness={isLight ? 0.2 : 0.8}
           metalness={isLight ? 0.1 : 0.2}
@@ -121,7 +123,7 @@ const TechParticles = ({ theme, scrollYProgress }) => {
       </bufferGeometry>
       <pointsMaterial
         size={0.15}
-        color={theme === "light" ? "#E8A838" : "#ffffff"}
+        color={theme === "light" ? ACCENT_GOLD : "#ffffff"}
         transparent
         opacity={0.4}
         blending={THREE.AdditiveBlending}

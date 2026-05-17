@@ -185,14 +185,15 @@ DistantGlow.propTypes = {
 const CosmicBackground = () => {
   const { theme } = useTheme();
   const { scrollYProgress } = useScroll();
+  const isDark = theme === "dark";
 
   return (
     <div
       className="fixed inset-0 z-0 pointer-events-none transition-colors duration-1000"
       style={{
-        background: theme === "light"
-          ? "radial-gradient(circle at center, #ffffff 0%, #f4f4f5 100%)"
-          : "radial-gradient(circle at center, #020205 0%, #000000 100%)"
+        background: isDark
+          ? "radial-gradient(circle at center, #020205 0%, #000000 100%)"
+          : "radial-gradient(circle at center, #ffffff 0%, #f4f4f5 100%)"
       }}
     >
       <Canvas
@@ -200,15 +201,15 @@ const CosmicBackground = () => {
         dpr={[1, 2]}
       >
         <PerspectiveCamera makeDefault position={[0, 0, 20]} fov={45} far={1000} />
-        <ambientLight intensity={theme === "light" ? 0.9 : 0.05} />
+        <ambientLight intensity={isDark ? 0.05 : 0.9} />
 
         <CelestialVoid scrollYProgress={scrollYProgress} />
 
         <EffectComposer disableNormalPass>
           <Bloom
-            luminanceThreshold={theme === "dark" ? 0.2 : 0.95}
+            luminanceThreshold={isDark ? 0.2 : 0.95}
             mipmapBlur
-            intensity={theme === "dark" ? 0.8 : 0.4}
+            intensity={isDark ? 0.8 : 0.4}
             radius={0.3}
           />
           <Noise opacity={0.012} />
@@ -221,7 +222,7 @@ const CosmicBackground = () => {
         <div
           className="absolute inset-0 transition-opacity duration-1000"
           style={{
-            opacity: theme === "dark" ? 0.4 : 0.05,
+            opacity: isDark ? 0.4 : 0.05,
             background: "radial-gradient(circle at 50% 50%, transparent 20%, rgba(0,0,0,0.9) 100%)"
           }}
         />

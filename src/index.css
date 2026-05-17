@@ -180,6 +180,34 @@ body {
   letter-spacing: -0.03em;
 }
 
+/* ═══════════════════════════════════════════════
+   CINEMA TYPOGRAPHY — Westworld-style title
+   ═══════════════════════════════════════════════ */
+.cinema-heading {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3.2rem, 9vw, 7.5rem);
+  font-weight: 900;
+  line-height: 0.92;
+  letter-spacing: -0.045em;
+  color: var(--text);
+  text-shadow:
+    0 0 40px rgba(0, 0, 0, 0.4),
+    0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.cinema-heading-accent {
+  color: var(--accent);
+  text-shadow:
+    0 0 36px rgba(232, 168, 56, 0.55),
+    0 0 60px rgba(232, 168, 56, 0.25),
+    0 2px 6px rgba(0, 0, 0, 0.4);
+  font-style: italic;
+}
+
+.cinema-title-wrap {
+  display: inline-block;
+}
+
 .heading-section {
   font-family: 'Playfair Display', serif;
   font-size: clamp(2rem, 4vw, 3rem);
@@ -384,6 +412,107 @@ body {
 
 .float-anim {
   animation: float-y 5s ease-in-out infinite;
+}
+
+/* ═══════════════════════════════════════════════
+   CINEMATIC SCENE — keyframes for layered bg
+   ═══════════════════════════════════════════════ */
+
+@keyframes aurora1 {
+  0%, 100% { transform: translate(0%, 0%) scale(1); }
+  33%      { transform: translate(-8%, 6%) scale(1.10); }
+  66%      { transform: translate(7%, -7%) scale(0.92); }
+}
+@keyframes aurora2 {
+  0%, 100% { transform: translate(0%, 0%) scale(1) rotate(0deg); }
+  33%      { transform: translate(12%, -8%) scale(0.95) rotate(10deg); }
+  66%      { transform: translate(-10%, 10%) scale(1.06) rotate(-8deg); }
+}
+@keyframes aurora3 {
+  0%, 100% { transform: translate(0%, 0%) rotate(0deg) scale(1); }
+  50%      { transform: translate(8%, -12%) rotate(18deg) scale(1.08); }
+}
+
+@keyframes orbDrift1 {
+  0%, 100% { transform: translate(0vw, 0vh) scale(1); }
+  50%      { transform: translate(18vw, -12vh) scale(1.10); }
+}
+@keyframes orbDrift2 {
+  0%, 100% { transform: translate(0vw, 0vh) scale(1); }
+  50%      { transform: translate(-15vw, 14vh) scale(0.92); }
+}
+@keyframes orbDrift3 {
+  0%, 100% { transform: translate(0vw, 0vh) scale(1); }
+  50%      { transform: translate(12vw, 16vh) scale(1.08); }
+}
+
+@keyframes scanSweep {
+  0%   { transform: translateY(-50vh); }
+  100% { transform: translateY(150vh); }
+}
+
+@keyframes spinSlow {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes spinReverse {
+  0%   { transform: scale(0.78) rotate(0deg); }
+  100% { transform: scale(0.78) rotate(-360deg); }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.15; transform: scale(0.85); }
+  50%      { opacity: 1;    transform: scale(1.15); }
+}
+
+@keyframes grainShift {
+  0%   { transform: translate(0%, 0%); }
+  25%  { transform: translate(-1.5%, 1%); }
+  50%  { transform: translate(1.5%, -1%); }
+  75%  { transform: translate(-1%, -1.5%); }
+  100% { transform: translate(0%, 0%); }
+}
+
+/* ═══════════════════════════════════════════════
+   FLOATING PORTRAIT — keyframes
+   ═══════════════════════════════════════════════ */
+
+@keyframes halo {
+  0%, 100% { opacity: 0.85; transform: scale(1); }
+  50%      { opacity: 1;    transform: scale(1.10); }
+}
+
+@keyframes rotateBorder {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes photoScan {
+  0%   { top: -3%; opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { top: 103%; opacity: 0; }
+}
+
+@keyframes shimmer {
+  0%, 100% { opacity: 0.5; transform: translateX(-15%); }
+  50%      { opacity: 1;   transform: translateX(15%); }
+}
+
+@keyframes framePulse {
+  0%, 100% {
+    box-shadow:
+      0 0 30px rgba(232, 168, 56, 0.45),
+      0 0 60px rgba(232, 168, 56, 0.25),
+      inset 0 0 30px rgba(232, 168, 56, 0.12);
+  }
+  50% {
+    box-shadow:
+      0 0 50px rgba(232, 168, 56, 0.75),
+      0 0 100px rgba(232, 168, 56, 0.35),
+      inset 0 0 40px rgba(232, 168, 56, 0.20);
+  }
 }
 
 .pulse-dot {

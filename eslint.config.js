@@ -48,6 +48,12 @@ const r3fProps = [
   'gl',
   'shadow-mapSize',
   'object',
+  'map',
+  'toneMapped',
+  'side',
+  'distance',
+  'preset',
+  'decay',
 ]
 
 export default defineConfig([

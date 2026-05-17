@@ -2,6 +2,8 @@ import { motion } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 
+const ACCENT_GOLD = "#E8A838";
+
 const LoadingScreen = ({ onComplete }) => {
   const [progress, setProgress] = useState(0);
   const canvasRef = useRef(null);
@@ -146,7 +148,7 @@ const LoadingScreen = ({ onComplete }) => {
               System Initialization
             </h1>
           </motion.div>
-          <p className="text-xs mt-3 font-mono uppercase tracking-[0.3em]" style={{ color: "#E8A838" }}>
+          <p className="text-xs mt-3 font-mono uppercase tracking-[0.3em]" style={{ color: ACCENT_GOLD }}>
             Establishing Secure Connection
           </p>
         </motion.div>
@@ -159,14 +161,14 @@ const LoadingScreen = ({ onComplete }) => {
               initial={{ width: 0 }}
               animate={{ width: `${Math.min(progress, 100)}%` }}
               className="h-full absolute left-0 top-0 shadow-[0_0_10px_#E8A838]"
-              style={{ background: "#E8A838" }}
+              style={{ background: ACCENT_GOLD }}
             />
           </div>
           <div className="flex justify-between mt-3 px-1">
             <span className="text-[9px] font-mono text-gray-500 uppercase tracking-widest">
               {progress >= 80 ? "Hyperspace Jump" : "Boot Sequence"}
             </span>
-            <span className="text-[10px] font-mono" style={{ color: "#E8A838" }}>
+            <span className="text-[10px] font-mono" style={{ color: ACCENT_GOLD }}>
               {Math.min(100, Math.round(progress))}%
             </span>
           </div>

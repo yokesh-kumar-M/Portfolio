@@ -5,7 +5,9 @@ import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion"
 import { Github, Linkedin, Mail, Heart, ArrowUp } from "lucide-react";
 import { ThemeProvider } from "./context/ThemeContext";
 import Navbar from "./components/Navbar";
-import CosmicBackground from "./components/CosmicBackground";
+import CinematicScene from "./components/CinematicScene";
+import HelmetScene from "./components/HelmetScene";
+import IronManHUD from "./components/IronManHUD";
 import LoadingScreen from "./components/LoadingScreen";
 import Marquee from "./components/Marquee";
 import Hero from "./sections/Hero";
@@ -94,7 +96,9 @@ const AppContent = () => {
           transition={{ duration: 0.8 }}
         >
           <ScrollBar />
-          <CosmicBackground />
+          <CinematicScene />
+          <HelmetScene />
+          <IronManHUD />
           <Navbar />
 
           <main className="relative z-10 w-full overflow-hidden">
